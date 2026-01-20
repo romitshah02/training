@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.sunbird.training.dao.UnitRepository;
 import com.sunbird.training.entity.Unit;
+import com.sunbird.training.exception.ResourceNotFoundException;
 
 @Service
 public class UnitServiceImpl implements UnitService {
@@ -23,7 +24,7 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public Unit findById(int id) {
-        return unitRepository.findById(id).orElseThrow(() -> new RuntimeException("No unit found"));
+        return unitRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No unit found"));
     }
 
     @Override

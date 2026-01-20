@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.sunbird.training.dao.CourseRepository;
 import com.sunbird.training.entity.Course;
 import com.sunbird.training.entity.Unit;
+import com.sunbird.training.exception.ResourceNotFoundException;
 
 import jakarta.transaction.Transactional;
 
@@ -28,15 +29,14 @@ public class CourseServiceImpl implements CourseService{
     public void save(Course course){
         if (course.getUnits() != null) {
         for (Unit unit : course.getUnits()) {
-            unit.setCourse(course); // Link each unit back to this course
+            unit.setCourse(course); 
         }
     }
         courseRepository.save(course);
     }
 
     public Course findById(int id){
-
-        return courseRepository.findById(id).orElseThrow(() -> new RuntimeException("No Such User"));
+        return courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No Such Course"));
     }   
 
     @Transactional
@@ -47,7 +47,7 @@ public class CourseServiceImpl implements CourseService{
     @Transactional
     public void addUnit(Unit unit,int courseId){
         Course course =  courseRepository.findById(courseId)
-        .orElseThrow(() -> new RuntimeException("Course not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
   
         course.addUnit(unit);
 
