@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sunbird.training.enums.Board;
+import com.sunbird.training.enums.Grade;
+import com.sunbird.training.enums.Medium;
+import com.sunbird.training.enums.Subject;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,10 +20,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-enum Board{ CBSE,ICSE,HSC}
-enum Medium{HINDI,ENGLISH,MARATHI}
-enum Grade{CLASS1,CLASS2,CLASS3}
-enum Subject{MATHS,ENGLISH,HINDI}
+
+
+
 
 @Entity
 @Table(name = "course")

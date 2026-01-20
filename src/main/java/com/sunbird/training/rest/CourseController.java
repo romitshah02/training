@@ -7,12 +7,17 @@ import com.sunbird.training.dao.ApiResponse;
 import com.sunbird.training.dao.CourseRepository;
 import com.sunbird.training.dao.ResponseParams;
 import com.sunbird.training.entity.Course;
+import com.sunbird.training.enums.Board;
+import com.sunbird.training.enums.Grade;
+import com.sunbird.training.enums.Medium;
+import com.sunbird.training.enums.Subject;
 import com.sunbird.training.service.CourseService;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +27,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -161,5 +168,37 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
     
+
+    // *find courses by filters
+    @GetMapping("/course/search")
+    public ResponseEntity<ApiResponse<List<Course>>> getCoursesByFilters(
+        @RequestParam(required = false) Board board,
+        @RequestParam(required = false) Medium medium,
+        @RequestParam(required = false) Grade grade,
+        @RequestParam(required = false) Subject subject
+     ) {
+    
+        List<Course> courses = courseService.searchCourses(board, medium, grade, subject);
+
+        ResponseParams params = new ResponseParams(
+            UUID.randomUUID().toString()
+            , "success"
+            , null
+            , null
+        );
+
+        ApiResponse<List<Course>> response = new ApiResponse<List<Course>>(
+        "api.course.get.byFilters",
+        "v1",
+        LocalDate.now().toString(), 
+        params, 
+        "OK", 
+        courses
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    
+
 
 }

@@ -2,12 +2,18 @@ package com.sunbird.training.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.sunbird.training.dao.CourseRepository;
 import com.sunbird.training.entity.Course;
 import com.sunbird.training.entity.Unit;
+import com.sunbird.training.enums.Board;
+import com.sunbird.training.enums.Grade;
+import com.sunbird.training.enums.Medium;
+import com.sunbird.training.enums.Subject;
 import com.sunbird.training.exception.ResourceNotFoundException;
+import com.sunbird.training.spec.CourseSpecifications;
 
 import jakarta.transaction.Transactional;
 
@@ -53,6 +59,11 @@ public class CourseServiceImpl implements CourseService{
 
         courseRepository.save(course);
    
+    }
+
+    public List<Course> searchCourses(Board board, Medium medium, Grade grade, Subject subject){
+        Specification<Course> spec = CourseSpecifications.hasFilter(board, medium, grade, subject);
+        return courseRepository.findAll(spec);
     }
 
 }
