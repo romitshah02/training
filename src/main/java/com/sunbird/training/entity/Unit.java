@@ -1,6 +1,8 @@
 package com.sunbird.training.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,8 +30,8 @@ public class Unit {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
+    @JsonBackReference
     private Course course;
-
 
     @Override
     public String toString() {

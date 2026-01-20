@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.sunbird.training.dao.CourseRepository;
 import com.sunbird.training.entity.Course;
+import com.sunbird.training.entity.Unit;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class CourseServiceImpl implements CourseService{
@@ -21,7 +24,13 @@ public class CourseServiceImpl implements CourseService{
         return courses;
     }
 
+    @Transactional
     public void save(Course course){
+        if (course.getUnits() != null) {
+        for (Unit unit : course.getUnits()) {
+            unit.setCourse(course); // Link each unit back to this course
+        }
+    }
         courseRepository.save(course);
     }
 
@@ -30,6 +39,7 @@ public class CourseServiceImpl implements CourseService{
         return courseRepository.findById(id).orElseThrow(() -> new RuntimeException("No Such User"));
     }   
 
+    @Transactional
     public void deleteById(int id){
         courseRepository.deleteById(id);
     }

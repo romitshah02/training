@@ -3,6 +3,8 @@ package com.sunbird.training.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -58,6 +60,7 @@ public class Course {
         orphanRemoval = true
     )
     @Column(name = "units")
+    @JsonManagedReference
     private List<Unit> units;
 
     public Course(){
