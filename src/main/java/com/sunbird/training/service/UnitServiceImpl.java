@@ -36,4 +36,9 @@ public class UnitServiceImpl implements UnitService {
         unitRepository.deleteById(id);
     }
 
+    @Override
+    public List<Unit> findAllByCourseId(int id) {
+        return unitRepository.findByCourseId(id);
+    }
+
 }

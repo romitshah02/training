@@ -36,6 +36,7 @@ public class CourseController {
   
     }
 
+    //*find all courses
     @GetMapping("/courses")
     public ResponseEntity<ApiResponse<List<Course>>> getCourses() {
       
@@ -60,6 +61,7 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    //*find course by id 
     @GetMapping("/course/{courseId}")
     public ResponseEntity<ApiResponse<Course>> getCourseById(@PathVariable int courseId) {
 
@@ -85,6 +87,7 @@ public class CourseController {
 
     }
     
+    //*Create Course
     @PostMapping("/course")
     public ResponseEntity<ApiResponse<Map<String,String>>> addCourse(@RequestBody Course course) {
             
@@ -110,6 +113,7 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     
+    //*update course
    @PutMapping("/course")
     public ResponseEntity<ApiResponse<Map<String,String>>> updateCourse(@RequestBody Course course) {
             
@@ -133,6 +137,7 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
+    // *delete course
     @DeleteMapping("/course/{courseId}")
     public ResponseEntity<ApiResponse<Map<String,String>>> deleteCourse(@PathVariable int courseId){
         courseService.deleteById(courseId);

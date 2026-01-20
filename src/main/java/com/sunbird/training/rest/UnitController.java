@@ -1,7 +1,6 @@
 package com.sunbird.training.rest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunbird.training.dao.ApiResponse;
@@ -19,9 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -34,6 +33,7 @@ public class UnitController {
         this.unitService = unitService;
     }
 
+    // *find all units
     @GetMapping("/units")
     public ResponseEntity<ApiResponse<List<Unit>>> getUnits() {
      List<Unit> units = unitService.findAll();
@@ -57,7 +57,7 @@ public class UnitController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-
+    // *find unit by id
     @GetMapping("/unit/{unitId}")
     public ResponseEntity<ApiResponse<Unit>> getunitById(@PathVariable int unitId) {
         
@@ -82,7 +82,7 @@ public class UnitController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-   
+    // *uodate an unit
     @PutMapping("/unit")
     public ResponseEntity<ApiResponse<Map<String,String>>> updateUnit(@RequestBody Unit unit) {
 
@@ -108,7 +108,7 @@ public class UnitController {
     }
 
 
-    
+    // *delete an unit
     @DeleteMapping("/unit/{unitId}")
     public ResponseEntity<ApiResponse<Map<String,String>>> deleteUnit(@PathVariable int unitId) {
 
@@ -133,6 +133,33 @@ public class UnitController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+
+    // *find all units by course id
+    @GetMapping("/unit/course/{courseId}")
+    public ResponseEntity<ApiResponse<List<Unit>>> getUnitsByCourseId(@PathVariable int courseId) {
+       
+    List<Unit> unit = unitService.findAllByCourseId(courseId);
+
+        ResponseParams params = new ResponseParams(
+            UUID.randomUUID().toString()
+            , "success"
+            , null
+            , null
+        );
+
+        ApiResponse<List<Unit>> response = new ApiResponse<List<Unit>>(
+        "api.unit.get.byId",
+        "v1",
+        LocalDate.now().toString(), 
+        params, 
+        "OK", 
+        unit
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+    }
+    
 
     
 

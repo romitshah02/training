@@ -44,4 +44,15 @@ public class CourseServiceImpl implements CourseService{
         courseRepository.deleteById(id);
     }
 
+    @Transactional
+    public void addUnit(Unit unit,int courseId){
+        Course course =  courseRepository.findById(courseId)
+        .orElseThrow(() -> new RuntimeException("Course not found"));
+  
+        course.addUnit(unit);
+
+        courseRepository.save(course);
+   
+    }
+
 }
