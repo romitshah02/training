@@ -1,5 +1,6 @@
 package com.sunbird.training.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -53,18 +54,14 @@ public class Course {
 
     @OneToMany(
         mappedBy = "course",
-        cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
-        }
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
     )
     @Column(name = "units")
     private List<Unit> units;
 
     public Course(){
-        
+
     }
 
     public Course(String name, String description, Board board, Medium medium, Grade grade, Subject subject,
@@ -148,6 +145,16 @@ public class Course {
                 + medium + ", grade=" + grade + ", subject=" + subject + ", units=" + units + "]";
     }
 
+
+    public void addUnit(Unit unit){
+
+        if (units.isEmpty() || units == null){
+            units = new ArrayList<>();
+        }
+
+        units.add(unit);
+        unit.setCourse(this);
+    }
 
     
     
