@@ -3,6 +3,8 @@ package com.sunbird.training.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.sunbird.training.dao.UnitRepository;
 import com.sunbird.training.entity.Unit;
 import com.sunbird.training.exception.ResourceNotFoundException;
@@ -28,11 +30,13 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
+    @Transactional
     public void save(Unit unit) {
         unitRepository.save(unit);
     }
 
     @Override
+    @Transactional
     public void deleteById(int id) {
         unitRepository.deleteById(id);
     }

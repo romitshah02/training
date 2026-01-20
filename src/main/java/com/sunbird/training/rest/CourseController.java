@@ -7,6 +7,7 @@ import com.sunbird.training.dao.ApiResponse;
 import com.sunbird.training.dao.CourseRepository;
 import com.sunbird.training.dao.ResponseParams;
 import com.sunbird.training.entity.Course;
+import com.sunbird.training.entity.Unit;
 import com.sunbird.training.enums.Board;
 import com.sunbird.training.enums.Grade;
 import com.sunbird.training.enums.Medium;
@@ -158,11 +159,12 @@ public class CourseController {
         );
 
         ApiResponse<Map<String,String>> response = new ApiResponse<Map<String,String>>(
-        "api.course.delete"
-        ,"v1", LocalDate.now().toString()
-        , params
-        , "OK"
-        , Map.of("message", "Course deleted successfully")
+        "api.course.delete",
+        "v1",
+        LocalDate.now().toString(),
+        params, 
+        "OK", 
+        Map.of("message", "Course deleted successfully")
         );
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
@@ -199,6 +201,29 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     
+    // *Add unit to a course
+    @PostMapping("/course/unit/{courseId}")
+    public ResponseEntity<ApiResponse<Map<String,String>>> addUnitToCourse(@PathVariable int courseId,@RequestBody Unit unit) {
+        
+        courseService.addUnit(unit, courseId);
 
+        ResponseParams params = new ResponseParams(
+            UUID.randomUUID().toString(),
+            "success",
+            null,
+            null
+        );
 
+        ApiResponse<Map<String,String>> response = new ApiResponse<Map<String,String>>(
+            "api.course.unit.add",
+            "v1",
+            LocalDate.now().toString(),
+            params,
+            "OK",
+            Map.of("message","unit added successfully")
+        );
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+    }
+    
 }

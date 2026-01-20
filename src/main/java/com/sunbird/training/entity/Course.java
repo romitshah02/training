@@ -17,6 +17,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -25,7 +26,10 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "course")
+@Table(
+    name = "course",
+    indexes = @Index(name = "idx_filters",columnList = "board,medium,grade,subject")
+)
 public class Course {
 
     @Id
