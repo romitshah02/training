@@ -20,6 +20,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 
@@ -37,27 +40,33 @@ public class Course {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    
+    @Column(name = "name",nullable = false)
+    @NotBlank(message = "Course Name is required")
     private String name;
     
     @Column(name = "description")
     private String description;
     
-    @Column(name = "board")
+    @Column(name = "board",nullable = false)
+    @NotNull(message = "Board is required")
     @Enumerated(EnumType.STRING)
     private Board board;
 
-    @Column(name = "medium")
+    @Column(name = "medium",nullable = false)
+    @NotNull(message = "Medium is required")
     @Enumerated(EnumType.STRING)
     private Medium medium;
 
     
-    @Column(name = "grade")
-    @Enumerated(EnumType.STRING)
+    @Column(name = "grade",nullable = false)
+    @Enumerated(EnumType.STRING)    
+    @NotNull(message = "Grade is required")
     private Grade grade;
 
     
-    @Column(name = "subject")
+    @Column(name = "subject",nullable = false)
+    @NotNull(message = "Subject is required")
     @Enumerated(EnumType.STRING)
     private Subject subject;
 
@@ -68,6 +77,7 @@ public class Course {
     )
     @Column(name = "units")
     @JsonManagedReference
+    @Valid
     private List<Unit> units;
 
     public Course(){

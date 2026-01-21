@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "unit")
@@ -23,6 +24,7 @@ public class Unit {
     private int id;
 
     @Column(name = "title")
+    @NotBlank(message = "Title is required")
     private String title;
 
     @Column(name = "content")

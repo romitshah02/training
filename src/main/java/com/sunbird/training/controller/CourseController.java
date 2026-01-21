@@ -1,10 +1,9 @@
-package com.sunbird.training.rest;
+package com.sunbird.training.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunbird.training.dao.ApiResponse;
-import com.sunbird.training.dao.CourseRepository;
 import com.sunbird.training.dao.ResponseParams;
 import com.sunbird.training.entity.Course;
 import com.sunbird.training.entity.Unit;
@@ -14,14 +13,16 @@ import com.sunbird.training.enums.Medium;
 import com.sunbird.training.enums.Subject;
 import com.sunbird.training.service.CourseService;
 
+import jakarta.validation.Valid;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,14 +35,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api")
+@Validated
 public class CourseController {
-
-    
+  
     private final CourseService courseService;
 
-    public CourseController(CourseService courseService, CourseRepository courseRepository) {
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
-  
     }
 
     //*find all courses
@@ -95,10 +95,13 @@ public class CourseController {
 
     }
     
-    //*Create Course
+    // //*Create Course
     @PostMapping("/course")
-    public ResponseEntity<ApiResponse<Map<String,String>>> addCourse(@RequestBody Course course) {
-            
+    public ResponseEntity<ApiResponse<Map<String,String>>> addCourse(@Valid @RequestBody Course course) {
+
+
+        System.out.println("Course name  : "+ course.getName());
+
         course.setId(0);
 
         courseService.save(course);
@@ -121,9 +124,10 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     
+  
     //*update course
    @PutMapping("/course")
-    public ResponseEntity<ApiResponse<Map<String,String>>> updateCourse(@RequestBody Course course) {
+    public ResponseEntity<ApiResponse<Map<String,String>>> updateCourse(@Valid @RequestBody Course course) {
             
         courseService.save(course);
     
@@ -203,7 +207,7 @@ public class CourseController {
     
     // *Add unit to a course
     @PostMapping("/course/unit/{courseId}")
-    public ResponseEntity<ApiResponse<Map<String,String>>> addUnitToCourse(@PathVariable int courseId,@RequestBody Unit unit) {
+    public ResponseEntity<ApiResponse<Map<String,String>>> addUnitToCourse(@PathVariable int courseId,@Valid @RequestBody Unit unit) {
         
         courseService.addUnit(unit, courseId);
 

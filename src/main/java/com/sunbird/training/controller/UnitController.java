@@ -1,4 +1,4 @@
-package com.sunbird.training.rest;
+package com.sunbird.training.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,6 +7,8 @@ import com.sunbird.training.dao.ApiResponse;
 import com.sunbird.training.dao.ResponseParams;
 import com.sunbird.training.entity.Unit;
 import com.sunbird.training.service.UnitService;
+
+import jakarta.validation.Valid;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -82,9 +84,9 @@ public class UnitController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    // *uodate an unit
+    // *update an unit
     @PutMapping("/unit")
-    public ResponseEntity<ApiResponse<Map<String,String>>> updateUnit(@RequestBody Unit unit) {
+    public ResponseEntity<ApiResponse<Map<String,String>>> updateUnit(@Valid @RequestBody Unit unit) {
 
         unitService.save(unit);
 
