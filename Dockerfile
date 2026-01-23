@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jre-alpine
+FROM bellsoft/liberica-runtime-container:jre-21-slim-musl
 
 WORKDIR /app    
 
