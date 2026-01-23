@@ -1,6 +1,20 @@
 version: '3.8'
 services:
-  postgres:
+  app:
+    build:
+      context: .
+      dockerfile : Dockerfile
+    depends_on:
+      - backend
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://backend:5432/db 
+      - SPRING_DATASOURCE_USERNAME=user  
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+  backend:
     image: bitnami/postgresql
     environment:
       POSTGRES_USER: user
@@ -10,6 +24,12 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql
+    networks:
+      - app-network
 
 volumes:
   pgdata:   
+
+networks:
+  app-network:
+    driver: bridge

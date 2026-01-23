@@ -100,8 +100,6 @@ public class CourseController {
     public ResponseEntity<ApiResponse<Map<String,String>>> addCourse(@Valid @RequestBody Course course) {
 
 
-        System.out.println("Course name  : "+ course.getName());
-
         course.setId(0);
 
         courseService.save(course);
