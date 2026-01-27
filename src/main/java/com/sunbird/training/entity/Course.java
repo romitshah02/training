@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sunbird.training.config.LowercaseDeserializer;
 import com.sunbird.training.enums.Board;
 import com.sunbird.training.enums.Grade;
 import com.sunbird.training.enums.Medium;
@@ -23,6 +24,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import tools.jackson.databind.annotation.JsonDeserialize;
 
 
 
@@ -43,6 +45,7 @@ public class Course {
     
     @Column(name = "name",nullable = false)
     @NotBlank(message = "Course Name is required")
+    @JsonDeserialize(using = LowercaseDeserializer.class)
     private String name;
     
     @Column(name = "description")

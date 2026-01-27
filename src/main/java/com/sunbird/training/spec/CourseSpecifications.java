@@ -15,9 +15,13 @@ import jakarta.persistence.criteria.Predicate;
 
 public class CourseSpecifications {
     //? Course Filter Specification file will check what filters where presesnt in the request
-    public static Specification<Course> hasFilter(Board board, Medium medium, Grade grade, Subject subject){
+    public static Specification<Course> hasFilter(String name,Board board, Medium medium, Grade grade, Subject subject){
        return (root,query,cb) -> {
             List<Predicate> predicates = new ArrayList<>();
+
+            if (name != null){
+                predicates.add(cb.equal(root.get("name"), name));
+            }
 
             if (board != null) {
                 predicates.add(cb.equal(root.get("board"), board));

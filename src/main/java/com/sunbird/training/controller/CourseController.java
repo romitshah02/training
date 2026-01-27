@@ -7,10 +7,6 @@ import com.sunbird.training.dao.ApiResponse;
 import com.sunbird.training.dao.ResponseParams;
 import com.sunbird.training.entity.Course;
 import com.sunbird.training.entity.Unit;
-import com.sunbird.training.enums.Board;
-import com.sunbird.training.enums.Grade;
-import com.sunbird.training.enums.Medium;
-import com.sunbird.training.enums.Subject;
 import com.sunbird.training.service.CourseService;
 
 import jakarta.validation.Valid;
@@ -29,7 +25,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -174,15 +169,12 @@ public class CourseController {
     
 
     // *find courses by filters
-    @GetMapping("/course/search")
+    @PostMapping("/course/search")
     public ResponseEntity<ApiResponse<List<Course>>> getCoursesByFilters(
-        @RequestParam(required = false) Board board,
-        @RequestParam(required = false) Medium medium,
-        @RequestParam(required = false) Grade grade,
-        @RequestParam(required = false) Subject subject
+        @RequestBody Course course
      ) {
     
-        List<Course> courses = courseService.searchCourses(board, medium, grade, subject);
+        List<Course> courses = courseService.searchCourses(course.getName(),course.getBoard(),course.getMedium(), course.getGrade(), course.getSubject());
 
         ResponseParams params = new ResponseParams(
             UUID.randomUUID().toString()

@@ -63,8 +63,8 @@ public class CourseServiceImpl implements CourseService{
    
     }
 
-    public List<Course> searchCourses(Board board, Medium medium, Grade grade, Subject subject){
-        Specification<Course> spec = CourseSpecifications.hasFilter(board, medium, grade, subject);
+    public List<Course> searchCourses(String name,Board board, Medium medium, Grade grade, Subject subject){
+        Specification<Course> spec = CourseSpecifications.hasFilter(name,board, medium, grade, subject);
         return courseRepository.findAll(spec);
     }
 

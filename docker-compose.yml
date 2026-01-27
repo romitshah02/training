@@ -7,9 +7,9 @@ services:
     depends_on:
       - backend
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://backend:5432/db 
-      - SPRING_DATASOURCE_USERNAME=user  
-      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_URL=${URL}
+      - SPRING_DATASOURCE_USERNAME=${USERNAME}  
+      - SPRING_DATASOURCE_PASSWORD=${PASSWORD}
     ports:
       - "8080:8080"
     networks:
@@ -17,9 +17,9 @@ services:
   backend:
     image: bitnami/postgresql
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: db
+      POSTGRES_USER: ${USERNAME}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_DB: ${DATABASE}
     ports:
       - "5432:5432"
     volumes:
