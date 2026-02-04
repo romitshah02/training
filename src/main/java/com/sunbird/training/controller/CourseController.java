@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunbird.training.dao.ApiResponse;
+import com.sunbird.training.dao.CourseCertificateDTO;
 import com.sunbird.training.dao.ResponseParams;
 import com.sunbird.training.entity.Course;
 import com.sunbird.training.entity.Unit;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +36,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class CourseController {
   
     private final CourseService courseService;
+    private KafkaTemplate<String,Object> kafkaTemplate;
 
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService,KafkaTemplate<String,Object> kafkaTemplate) {
         this.courseService = courseService;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     //*find all courses
@@ -97,7 +101,12 @@ public class CourseController {
 
         course.setId(0);
 
-        courseService.save(course);
+        course =  courseService.save(course);
+
+        System.out.println("Sending to kafka..............");
+
+        kafkaTemplate.send("course-created",CourseCertificateDTO.courseToCertificate(course));
+
         
         ResponseParams params = new ResponseParams(
             UUID.randomUUID().toString()

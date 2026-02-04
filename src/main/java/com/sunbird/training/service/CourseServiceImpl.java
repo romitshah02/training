@@ -34,13 +34,17 @@ public class CourseServiceImpl implements CourseService{
 
     @Transactional
     @Override
-    public void save(Course course){
+    public Course save(Course course){
+
         if (course.getUnits() != null) {
             for (Unit unit : course.getUnits()) {
                 unit.setCourse(course); 
                 }
         }
-        courseRepository.save(course);
+        
+        course  = courseRepository.save(course);
+
+        return course;
     }
 
     public Course findById(int id){

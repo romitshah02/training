@@ -14,7 +14,7 @@ public interface CourseService {
 
     List<Course> findAll();
     Course findById(int id);
-    void save(Course course);
+    Course save(Course course);
     void deleteById(int id);
     void addUnit(Unit unit,int courseId);
     List<Course> searchCourses(String name,Board board, Medium medium, Grade grade, Subject subject);

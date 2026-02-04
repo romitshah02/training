@@ -1,15 +1,15 @@
-package com.sunbird.training;
+package com.flink.certificationcriteria;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.kafka.annotation.EnableKafka;
 
 @SpringBootApplication
-@EnableKafka
-public class TrainingApplication {
+public class CertificationcriteriaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TrainingApplication.class, args);
+		SpringApplication.run(CertificationcriteriaApplication.class, args);
 	}
+
+	
 
 }
