@@ -12,7 +12,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "unit")
 public class Unit {
@@ -34,48 +43,6 @@ public class Unit {
     @JoinColumn(name = "course_id")
     @JsonBackReference
     private Course course;
-
-    @Override
-    public String toString() {
-        return "Unit [id=" + id + ", title=" + title + ", content=" + content + ", course=" + course + "]";
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Unit(){
-        
-    }
 
     public Unit(String title, String content) {
         this.title = title;

@@ -1,4 +1,4 @@
-package com.sunbird.training.service;
+package com.sunbird.training.service.impl;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sunbird.training.dao.UnitRepository;
 import com.sunbird.training.entity.Unit;
 import com.sunbird.training.exception.ResourceNotFoundException;
+import com.sunbird.training.service.UnitService;
 
 @Service
 public class UnitServiceImpl implements UnitService {

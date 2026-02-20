@@ -7,6 +7,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -143,4 +146,75 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    //! For Invalid Token Signature
+    @ExceptionHandler(JwtValidationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleJwtValidationException(JwtValidationException ex) {
+        
+        ResponseParams params = new ResponseParams(
+            UUID.randomUUID().toString(),
+            "failed",
+            "Invalid Jwt Token",
+            "Error : " + ex.getMessage()
+        );
+
+        ApiResponse<Object> response = new ApiResponse<>(
+            "api.error",
+            "v1",
+            LocalDate.now().toString(),
+            params,
+            "BAD_REQUEST",
+            null
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    //! For Endpoint Access exception
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleAccessDeniedException(AuthorizationDeniedException ex) {
+        
+        ResponseParams params = new ResponseParams(
+            UUID.randomUUID().toString(),
+            "failed",
+            "ACCESS_DENIED",
+            "Error : " + ex.getMessage()
+        );
+
+        ApiResponse<Object> response = new ApiResponse<>(
+            "api.error",
+            "v1",
+            LocalDate.now().toString(),
+            params,
+            "BAD_REQUEST",
+            null
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
+
+
+    //! For Wrong credentials 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiResponse<Object>> handleBadCredentialsException(BadCredentialsException ex) {
+        
+        ResponseParams params = new ResponseParams(
+            UUID.randomUUID().toString(),
+            "failed",
+            "ACCESS_DENIED",
+            "Error : " + ex.getMessage()
+        );
+
+        ApiResponse<Object> response = new ApiResponse<>(
+            "api.error",
+            "v1",
+            LocalDate.now().toString(),
+            params,
+            "BAD_REQUEST",
+            null
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
+
+    
 }

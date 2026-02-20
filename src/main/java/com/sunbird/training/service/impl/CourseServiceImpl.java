@@ -1,4 +1,4 @@
-package com.sunbird.training.service;
+package com.sunbird.training.service.impl;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import com.sunbird.training.enums.Grade;
 import com.sunbird.training.enums.Medium;
 import com.sunbird.training.enums.Subject;
 import com.sunbird.training.exception.ResourceNotFoundException;
+import com.sunbird.training.service.CourseService;
 import com.sunbird.training.spec.CourseSpecifications;
 
 import jakarta.transaction.Transactional;

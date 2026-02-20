@@ -24,12 +24,19 @@ import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import tools.jackson.databind.annotation.JsonDeserialize;
 
 
 
 
-
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(
     name = "course",
@@ -83,10 +90,6 @@ public class Course {
     @Valid
     private List<Unit> units;
 
-    public Course(){
-
-    }
-
     public Course(String name, String description, Board board, Medium medium, Grade grade, Subject subject,
             List<Unit> units) {
         this.name = name;
@@ -97,77 +100,6 @@ public class Course {
         this.subject = subject;
         this.units = units;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
-    public Medium getMedium() {
-        return medium;
-    }
-
-    public void setMedium(Medium medium) {
-        this.medium = medium;
-    }
-
-    public Grade getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Grade grade) {
-        this.grade = grade;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public List<Unit> getUnits() {
-        return units;
-    }
-
-    public void setUnits(List<Unit> units) {
-        this.units = units;
-    }
-
-    @Override
-    public String toString() {
-        return "Course [id=" + id + ", name=" + name + ", description=" + description + ", board=" + board + ", medium="
-                + medium + ", grade=" + grade + ", subject=" + subject + ", units=" + units + "]";
-    }
-
 
     public void addUnit(Unit unit){
 
